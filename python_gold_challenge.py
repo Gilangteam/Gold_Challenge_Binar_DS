@@ -140,34 +140,3 @@ def fungsi_2(kalimat):
 
 if __name__ == "__main__":
     app.run()
-
-# Analisis
-
-# 1. Rata - rata char
-print('==================================================================')
-df['total_char'] = df['Tweet'].apply(len)
-print ("rata rata huruf setiap tweet", df['total_char'].mean())
-
-# 2. Rata - rata kata
-print('==================================================================')
-df['total_word'] = df['Tweet'].apply(lambda sent: len(sent.split()))
-print ("rata rata kata setiap tweet", df['total_word'].mean())
-
-# 3. Menghitung frekuensi kemunculan setiap kata
-print('==================================================================')
-df['splitted_tweet'] = [tweet.split(" ") for tweet in df['Tweet']] #mecah kata
-count_of_words = {} #loop ngitung banyak kata
-for splitted_tweet in df['splitted_tweet']:
-    for word in splitted_tweet:
-        try:
-            count_of_words[word] += 1
-        except KeyError:
-            count_of_words[word] = 1
-
-# 4. Top 5 dan bot 5
-print('==================================================================')
-print(sorted(count_of_words.items(), key = lambda x:x[1],reverse = True)[1:6]) #top 5 
-print(sorted(count_of_words.items(), key = lambda x:x[1],reverse = False)[:5]) #bot 5 
-
-# 5. Rata - rata kata hatespeech dan non - hatespeech
-df.groupby('HS').total_word.mean().plot(kind='bar')
